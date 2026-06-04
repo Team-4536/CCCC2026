@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps\pico_sdk-subbuild\CMakeFiles\06e248c8dd324f16b2b0bda1dbe6e928\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{BEC4C95E-6E44-3B30-BF39-39D288A95896}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

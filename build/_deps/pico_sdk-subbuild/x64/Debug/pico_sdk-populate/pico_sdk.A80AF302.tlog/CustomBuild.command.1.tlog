@@ -1,0 +1,150 @@
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-MKDIR.RULE
+setlocal
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -Dcfgdir=/Debug -P C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/tmp/pico_sdk-populate-mkdirs.cmake
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-DOWNLOAD.RULE
+setlocal
+cd C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/tmp/pico_sdk-populate-gitclone.cmake
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-UPDATE.RULE
+setlocal
+cd C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps\pico_sdk-src
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/tmp/pico_sdk-populate-gitupdate.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-PATCH.RULE
+setlocal
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-CONFIGURE.RULE
+setlocal
+cd C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps\pico_sdk-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-BUILD.RULE
+setlocal
+cd C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps\pico_sdk-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-INSTALL.RULE
+setlocal
+cd C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps\pico_sdk-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\B0C2F87ECC731C97FB02CAAA8313DF5C\PICO_SDK-POPULATE-TEST.RULE
+setlocal
+cd C:\Users\Dex\OneDrive\Desktop\CCCC_C++\CCCC2026\build\_deps\pico_sdk-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-test
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\079DE4E7F35D4124284D011D9F608AA9\PICO_SDK-POPULATE-COMPLETE.RULE
+setlocal
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E make_directory C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/Debug
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/Debug/pico_sdk-populate-complete
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -E touch C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate-prefix/src/pico_sdk-populate-stamp/Debug/pico_sdk-populate-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\06E248C8DD324F16B2B0BDA1DBE6E928\PICO_SDK-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKELISTS.TXT
+setlocal
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -SC:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild -BC:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild --check-stamp-file C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

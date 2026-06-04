@@ -1,0 +1,3 @@
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/pico_sdk-populate.dir
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/ALL_BUILD.dir
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/ZERO_CHECK.dir

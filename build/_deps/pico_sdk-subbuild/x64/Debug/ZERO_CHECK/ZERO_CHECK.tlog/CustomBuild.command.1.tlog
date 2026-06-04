@@ -1,0 +1,10 @@
+^C:\USERS\DEX\ONEDRIVE\DESKTOP\CCCC_C++\CCCC2026\BUILD\_DEPS\PICO_SDK-SUBBUILD\CMAKEFILES\06E248C8DD324F16B2B0BDA1DBE6E928\GENERATE.STAMP.RULE
+setlocal
+C:\Users\Dex\scoop\apps\cmake\current\bin\cmake.exe -SC:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild -BC:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/pico_sdk-populate.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,14 @@
+# Target labels
+ pico_sdk-populate
+# Source files and their labels
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/pico_sdk-populate
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/06e248c8dd324f16b2b0bda1dbe6e928/pico_sdk-populate.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/079de4e7f35d4124284d011d9f608aa9/pico_sdk-populate-complete.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-build.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-configure.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-download.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-install.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-mkdir.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-patch.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-test.rule
+C:/Users/Dex/OneDrive/Desktop/CCCC_C++/CCCC2026/build/_deps/pico_sdk-subbuild/CMakeFiles/b0c2f87ecc731c97fb02caaa8313df5c/pico_sdk-populate-update.rule
