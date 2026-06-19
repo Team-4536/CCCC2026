@@ -9,7 +9,6 @@
 //   RIGHT = 3,
 // }
 #include <functional>
-
 // MOTOR CLASS
 class Motor
 {
@@ -28,15 +27,18 @@ private:
 class Instruction
 {
 public:
-  Instruction(std::function<void(float, int)> func, int arg, float seconds);
+  Instruction();
+  Instruction(std::function<void()> func, float seconds = -1);
+  Instruction(std::function<void(int)> func, int arg, float seconds);
   void run();
-  int getTime();
+  float getTime();
 
 private:
-  std::function<void(float, int)> func;
-  int arg;
-  float seconds;
-}
+  std::function<void(int)> argFunc;
+  std::function<void()> voidFunc;
+  int arg = -1;
+  float seconds = -1;
+};
 
 // ROBOT CLASS
 class Robot
@@ -44,24 +46,31 @@ class Robot
 public:
   Robot();
   Robot(int rmfp, int rmbp, int lmfp, int lmbp);
-  void forward(float seconds, int speed);
-  void backward(float seconds, int speed);
-  void right(float seconds, int speed);
-  void left(float seconds, int speed);
+  void forward(int speed);
+  void backward(int speed);
+  void right(int speed);
+  void left(int speed);
   void stop();
-  void simpleAccel(float seconds, int setpoint);
+  void simpleAccel(int setpoint);
   void updateAccel(double currSeconds);
-  void addInstruction(function<void(float, int)> func, int arg, float seconds);
+  void addInstruction(std::function<void(int)> func, int arg, float seconds);
+  void addInstruction(std::function<void()> func, float seconds = -1);
+  void nextInstruction();
+  void update();
 
 private:
   Motor rightMotor;
   Motor leftMotor;
-  Instruction instructions[10];
+  static const int MAX_INSTRUCT = 10;
+  Instruction instructions[MAX_INSTRUCT];
   double funcStartTime = 0;
   double funcTime = 0;
   int setpoint = 0;
+  int currSpeed = 0;
   bool accelerate = false;
   int instructIndex = 0;
+  int numInstructs = 0;
+  bool funcRan = false;
   // enum Direction currDir = NONE;
 };
 
@@ -69,15 +78,17 @@ private:
 class AbstractRobot // what CCCC will interact with
 {
 public:
+  Robot robot;
+
   AbstractRobot();
+  AbstractRobot(int rmfp, int rmbp, int lmfp, int lmbp);
   void forward(float seconds, int speed);
   void backward(float seconds, int speed);
   void right(float seconds, int speed);
   void left(float seconds, int speed);
   void stop();
   void simpleAccel(float seconds, int setpoint);
-
-  priavte : Robot robot;
-}
+    
+};
 
 #endif
