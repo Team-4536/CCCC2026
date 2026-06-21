@@ -1,14 +1,21 @@
 #ifndef robot_h
 #define robot_h
 
-// enum Direction {
-//   NONE = -1,
-//   FORWARD = 0,
-//   BACLWARD = 1,
-//   LEFT = 2,
-//   RIGHT = 3,
-// }
-#include <functional>
+class Motor;
+class Robot;
+class AbstractRobot;
+class Instruction;
+
+enum Instruct {
+  STOP,
+  WAIT,
+  FORWARD,
+  BACKWARD,
+  LEFT,
+  RIGHT,
+  ACCELERATE,
+};
+
 // MOTOR CLASS
 class Motor
 {
@@ -27,17 +34,17 @@ private:
 class Instruction
 {
 public:
+  Instruct func;
   Instruction();
-  Instruction(std::function<void()> func, float seconds = -1);
-  Instruction(std::function<void(int)> func, int arg, float seconds);
-  void run();
+  Instruction(Instruct func, int arg, float seconds);
+  Instruction(Instruct func, float seconds = 0);
+  void run(Robot* robot);
   float getTime();
 
 private:
-  std::function<void(int)> argFunc;
-  std::function<void()> voidFunc;
+  
   int arg = -1;
-  float seconds = -1;
+  float seconds = 0;
 };
 
 // ROBOT CLASS
@@ -53,8 +60,8 @@ public:
   void stop();
   void simpleAccel(int setpoint);
   void updateAccel(double currSeconds);
-  void addInstruction(std::function<void(int)> func, int arg, float seconds);
-  void addInstruction(std::function<void()> func, float seconds = -1);
+  void addInstruction(Instruct func, int arg, float seconds);
+  void addInstruction(Instruct func, float seconds = -1);
   void nextInstruction();
   void update();
 
@@ -71,6 +78,7 @@ private:
   int instructIndex = 0;
   int numInstructs = 0;
   bool funcRan = false;
+  Instruct currFunc;
   // enum Direction currDir = NONE;
 };
 

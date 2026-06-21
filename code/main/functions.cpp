@@ -1,4 +1,3 @@
-#include <functional>
 #include <iostream>
 #include "robot.hpp"
 #include "arduino.h"
@@ -32,27 +31,49 @@ Instruction::Instruction(){
   std::cout << "NOOOO" << std::endl;
 }
 
-Instruction::Instruction(std::function<void(int)> func, int arg, float seconds)
+Instruction::Instruction(Instruct func, int arg, float seconds)
 {
-  this->argFunc = func;
+  this->func = func;
   this->arg = arg;
   this->seconds = seconds;
 }
 
-Instruction::Instruction(std::function<void()> func, float seconds)
+Instruction::Instruction(Instruct func, float seconds)
 {
-  this->voidFunc = func;
+  this->func = func;
   this->seconds = seconds;
 }
 
-void Instruction::run()
+void Instruction::run(Robot* robot)
 {
-  if(arg == -1){
-    this->voidFunc;
+  if(arg == -1){ // room for more instructions with no args
+    switch(func){
+      case STOP:
+        robot->stop();
+        break;
+      case WAIT:
+        break;
+    }
     return;
   }
 
-  this->argFunc(arg);
+  switch(func){
+    case FORWARD:
+      robot->forward(arg);
+      break;
+    case BACKWARD:
+      robot->backward(arg);
+      break;
+    case LEFT:
+      robot->left(arg);
+      break;
+    case RIGHT:
+      robot->right(arg);
+      break;
+    case ACCELERATE:
+      robot->simpleAccel(arg);
+      break;
+  }
 }
 
 float Instruction::getTime()
@@ -71,12 +92,16 @@ Robot::Robot(int rmfp, int rmbp, int lmfp, int lmbp)
   leftMotor = Motor(lmfp, lmbp);
 }
 
-void Robot::addInstruction(std::function<void(int)> func, int arg, float seconds)
+void Robot::addInstruction(Instruct func, int arg, float seconds)
 {
+  if(numInstructs >= MAX_INSTRUCT){
+    return;
+  }
   instructions[instructIndex] = Instruction(func, arg, seconds);
+  instructIndex++;
 }
 
-void Robot::addInstruction(std::function<void()> func, float seconds)
+void Robot::addInstruction(Instruct func, float seconds)
 {
   if(numInstructs >= MAX_INSTRUCT){
     return;
@@ -89,7 +114,8 @@ void Robot::nextInstruction()
 {
   if (instructIndex < numInstructs)
   {
-    instructions[instructIndex].run();
+    instructions[instructIndex].run(this);
+    currFunc = instructions[instructIndex].func;
     funcStartTime = millis();
     funcTime = instructions[instructIndex].getTime();
     instructIndex++;
@@ -102,7 +128,6 @@ void Robot::forward(int speed)
   rightMotor.forward(speed);
   leftMotor.forward(speed);
   digitalWrite(27, HIGH);
-  digitalWrite(27, LOW);
 }
 
 void Robot::backward(int speed)
@@ -125,7 +150,7 @@ void Robot::left(int speed)
 
 }
 
-// Connor's stuff is below 
+// Connor's stuff is everywhere >:3 
 
 void Robot::stop()
 {
@@ -143,12 +168,20 @@ void Robot::updateAccel(double currSeconds)
 {
   double mult = (currSeconds - funcStartTime) / funcTime;
   currSpeed = setpoint * mult;
+  forward(currSpeed);
 }
 
 void Robot::update()
 {
-  if(!funcRan){
+  if(!funcRan){ // this and next if statement make a toggle
     nextInstruction();
+  }
+
+  if(funcRan){
+    if(millis() - funcStartTime >= funcTime){
+      funcRan = false;
+      digitalWrite(27, LOW);
+    }
   }
 
   if(accelerate)
@@ -170,30 +203,30 @@ AbstractRobot::AbstractRobot(int rmfp, int rmbp, int lmfp, int lmbp)
 
 void AbstractRobot::forward(float seconds, int speed)
 {
-  robot.addInstruction(std::bind(&Robot::forward, robot, std::placeholders::_1), speed, seconds);
+  robot.addInstruction(Instruct::FORWARD, speed, seconds);
 }
 
 void AbstractRobot::backward(float seconds, int speed)
 {
-  robot.addInstruction(std::bind(&Robot::backward, robot, std::placeholders::_1), speed, seconds);
+  robot.addInstruction(Instruct::BACKWARD, speed, seconds);
 }
 
 void AbstractRobot::right(float seconds, int speed)
 {
-  robot.addInstruction(std::bind(&Robot::right, robot, std::placeholders::_1), speed, seconds);
+  robot.addInstruction(Instruct::RIGHT, speed, seconds);
 }
 
 void AbstractRobot::left(float seconds, int speed)
 {
-  robot.addInstruction(std::bind(&Robot::left, robot, std::placeholders::_1), speed, seconds);
+  robot.addInstruction(Instruct::LEFT, speed, seconds);
 }
 
 void AbstractRobot::stop()
 {
-  robot.addInstruction(std::bind(&Robot::stop, robot));
+  robot.addInstruction(Instruct::STOP);
 }
 
 void AbstractRobot::simpleAccel(float seconds, int setpoint)
 {
-  robot.addInstruction(std::bind(&Robot::simpleAccel, robot, std::placeholders::_1), setpoint, seconds);
+  robot.addInstruction(Instruct::ACCELERATE, setpoint, seconds);
 }
