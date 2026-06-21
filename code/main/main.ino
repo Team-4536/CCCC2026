@@ -16,6 +16,9 @@ void fakeMain(){
   robot.right(1, 255);
   robot.left(1, 255);
   robot.stop();
+  robot.forward(1, 255);
+  robot.wait(1);
+  robot.backward(1, 255);
 }
 
 const int right_motor_1 = 6;

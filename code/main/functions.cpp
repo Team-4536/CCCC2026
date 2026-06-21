@@ -80,9 +80,9 @@ void Robot::runInstruction(Instruction& instruction)
   }
 }
 
-float Instruction::getTime()
+float Instruction::getTime() // return the time in milliseconds
 {
-  return seconds;
+  return seconds * 1000; // convert to milliseconds because milis()
 }
 
 // ROBOT CLASS
@@ -114,7 +114,7 @@ void Robot::addInstruction(Instruct func, float seconds)
   numInstructs++;
 }
 
-void Robot::nextInstruction()
+void Robot::nextInstruction() // reset and run the next instruction
 {
   if (instructIndex < numInstructs)
   {
@@ -122,6 +122,7 @@ void Robot::nextInstruction()
     currFunc = instructions[instructIndex].func;
     funcStartTime = millis();
     funcTime = instructions[instructIndex].getTime();
+    isAccelerating = false;
     instructIndex++;
     funcRan = true;
   }
