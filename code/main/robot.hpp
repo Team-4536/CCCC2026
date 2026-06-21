@@ -35,16 +35,17 @@ class Instruction
 {
 public:
   Instruct func;
+  int arg = -1;
+  float seconds = 0;
+
   Instruction();
   Instruction(Instruct func, int arg, float seconds);
   Instruction(Instruct func, float seconds = 0);
-  void run(Robot* robot);
   float getTime();
 
 private:
   
-  int arg = -1;
-  float seconds = 0;
+  
 };
 
 // ROBOT CLASS
@@ -63,6 +64,7 @@ public:
   void addInstruction(Instruct func, int arg, float seconds);
   void addInstruction(Instruct func, float seconds = -1);
   void nextInstruction();
+  void runInstruction(Instruction& instruction);
   void update();
 
 private:

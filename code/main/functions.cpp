@@ -44,12 +44,14 @@ Instruction::Instruction(Instruct func, float seconds)
   this->seconds = seconds;
 }
 
-void Instruction::run(Robot* robot)
+void Robot::runInstruction(Instruction& instruction)
 {
-  if(arg == -1){ // room for more instructions with no args
+  Instruct func = instruction.func;
+
+  if(instruction.arg == -1){ // room for more instructions with no args
     switch(func){
       case STOP:
-        robot->stop();
+        stop();
         break;
       case WAIT:
         break;
@@ -57,21 +59,23 @@ void Instruction::run(Robot* robot)
     return;
   }
 
+  int arg = instruction.arg;
+
   switch(func){
     case FORWARD:
-      robot->forward(arg);
+      forward(arg);
       break;
     case BACKWARD:
-      robot->backward(arg);
+      backward(arg);
       break;
     case LEFT:
-      robot->left(arg);
+      left(arg);
       break;
     case RIGHT:
-      robot->right(arg);
+      right(arg);
       break;
     case ACCELERATE:
-      robot->simpleAccel(arg);
+      simpleAccel(arg);
       break;
   }
 }
@@ -114,7 +118,7 @@ void Robot::nextInstruction()
 {
   if (instructIndex < numInstructs)
   {
-    instructions[instructIndex].run(this);
+    runInstruction(instructions[instructIndex]);
     currFunc = instructions[instructIndex].func;
     funcStartTime = millis();
     funcTime = instructions[instructIndex].getTime();
