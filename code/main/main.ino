@@ -4,14 +4,15 @@
 AbstractRobot robot;
 
 void fakeMain(){
-  // put your main code here, to run repeatedly:
+  // put your main code here, instructions for the robot:
   // functions:
-  // 1. forward
-  // 2. backward
-  // 3. right
-  // 4. left
-  // 5. stop
-
+  // 1. forward : takes a time in seconds and a speed
+  // 2. backward : takes a time in seconds and a speed
+  // 3. right : takes a time in seconds and a speed
+  // 4. left : takes a time in seconds and a speed
+  // 5. stop : takes no arguments
+  // 6. accelerate : takes a time in seconds and a speed to accelerate to
+  robot.accelerate(1, 255);
   robot.right(1, 255);
   robot.left(1, 255);
   robot.stop();

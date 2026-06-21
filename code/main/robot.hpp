@@ -59,7 +59,7 @@ public:
   void right(int speed);
   void left(int speed);
   void stop();
-  void simpleAccel(int setpoint);
+  void accelerate(int setpoint);
   void updateAccel(double currSeconds);
   void addInstruction(Instruct func, int arg, float seconds);
   void addInstruction(Instruct func, float seconds = -1);
@@ -76,7 +76,7 @@ private:
   double funcTime = 0;
   int setpoint = 0;
   int currSpeed = 0;
-  bool accelerate = false;
+  bool isAccelerating = false;
   int instructIndex = 0;
   int numInstructs = 0;
   bool funcRan = false;
@@ -97,7 +97,7 @@ public:
   void right(float seconds, int speed);
   void left(float seconds, int speed);
   void stop();
-  void simpleAccel(float seconds, int setpoint);
+  void accelerate(float seconds, int setpoint);
     
 };
 

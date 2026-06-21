@@ -75,7 +75,7 @@ void Robot::runInstruction(Instruction& instruction)
       right(arg);
       break;
     case ACCELERATE:
-      simpleAccel(arg);
+      accelerate(arg);
       break;
   }
 }
@@ -162,9 +162,9 @@ void Robot::stop()
   leftMotor.stop();
 }
 
-void Robot::simpleAccel(int setpoint)
+void Robot::accelerate(int setpoint)
 {
-  accelerate = true;
+  isAccelerating = true;
   this->setpoint = setpoint;
 }
 
@@ -188,7 +188,7 @@ void Robot::update()
     }
   }
 
-  if(accelerate)
+  if(isAccelerating)
   {
     updateAccel(millis());
   }
@@ -230,7 +230,7 @@ void AbstractRobot::stop()
   robot.addInstruction(Instruct::STOP);
 }
 
-void AbstractRobot::simpleAccel(float seconds, int setpoint)
+void AbstractRobot::accelerate(float seconds, int setpoint)
 {
   robot.addInstruction(Instruct::ACCELERATE, setpoint, seconds);
 }
