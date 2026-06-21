@@ -234,3 +234,8 @@ void AbstractRobot::accelerate(float seconds, int setpoint)
 {
   robot.addInstruction(Instruct::ACCELERATE, setpoint, seconds);
 }
+
+void AbstractRobot::wait(float seconds)
+{
+  robot.addInstruction(Instruct::WAIT, seconds);
+}

@@ -62,7 +62,7 @@ public:
   void accelerate(int setpoint);
   void updateAccel(double currSeconds);
   void addInstruction(Instruct func, int arg, float seconds);
-  void addInstruction(Instruct func, float seconds = -1);
+  void addInstruction(Instruct func, float seconds = -1); // mainly for stop and wait
   void nextInstruction();
   void runInstruction(Instruction& instruction);
   void update();
@@ -97,6 +97,7 @@ public:
   void right(float seconds, int speed);
   void left(float seconds, int speed);
   void stop();
+  void wait(float seconds);
   void accelerate(float seconds, int setpoint);
     
 };
