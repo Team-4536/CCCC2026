@@ -4,30 +4,31 @@
 
 // MOTOR CLASS
 
-Motor::Motor(int forwardPin, int backwardPin)
+Motor::Motor(int enablePin, int dirPin)
 {
-  this->backwardPin = backwardPin;
-  this->forwardPin = forwardPin;
+  this->enablePin = enablePin;
+  this->dirPin = dirPin;
 }
 
 void Motor::stop()
 {
-  digitalWrite(forwardPin, LOW);
-  analogWrite(backwardPin, 0);
+  digitalWrite(dirPin, LOW);
+  analogWrite(enablePin, 0);
 }
 void Motor::forward(int speed)
 {
-  digitalWrite(backwardPin, LOW);
-  analogWrite(forwardPin, speed);
+  digitalWrite(dirPin, HIGH);
+  analogWrite(enablePin, speed);  
 }
 void Motor::backward(int speed)
 {
-  digitalWrite(forwardPin, LOW);
-  analogWrite(backwardPin, speed);
+  digitalWrite(dirPin, LOW);
+  analogWrite(enablePin, speed);
 }
 
 // INSTRUCTION CLASS
-Instruction::Instruction(){
+Instruction::Instruction()
+{
   std::cout << "NOOOO" << std::endl;
 }
 
@@ -44,39 +45,45 @@ Instruction::Instruction(Instruct func, float seconds)
   this->seconds = seconds;
 }
 
-void Robot::runInstruction(Instruction& instruction)
+void Robot::runInstruction(Instruction &instruction)
 {
+  Serial.print("Instruction Running");
   Instruct func = instruction.func;
 
-  if(instruction.arg == -1){ // room for more instructions with no args
-    switch(func){
-      case STOP:
-        stop();
-        break;
-      case WAIT:
-        break;
+  if (instruction.arg == -1)
+  { // room for more instructions with no args
+    switch (func)
+    {
+    case STOP:
+      stop();
+      break;
+    case WAIT:
+      break;
     }
     return;
   }
 
   int arg = instruction.arg;
 
-  switch(func){
-    case FORWARD:
-      forward(arg);
-      break;
-    case BACKWARD:
-      backward(arg);
-      break;
-    case LEFT:
-      left(arg);
-      break;
-    case RIGHT:
-      right(arg);
-      break;
-    case ACCELERATE:
-      accelerate(arg);
-      break;
+  switch (func)
+  {
+  case FORWARD:
+    forward(arg);
+    break;
+  case BACKWARD:
+    backward(arg);
+    break;
+  case LEFT:
+    left(arg);
+    break;
+  case RIGHT:
+    right(arg);
+    break;
+  case ACCELERATE:
+    accelerate(arg);
+    break;
+  default:
+    Serial.print("Switch is buns");
   }
 }
 
@@ -90,27 +97,38 @@ Robot::Robot()
 {
 }
 
-Robot::Robot(int rmfp, int rmbp, int lmfp, int lmbp)
+Robot::Robot(int rmep, int rmdp, int lmep, int lmdp)
 {
-  rightMotor = Motor(rmfp, rmbp);
-  leftMotor = Motor(lmfp, lmbp);
+  rightMotor = Motor(rmep, rmdp);
+  leftMotor = Motor(lmep, lmdp);
+}
+
+void Robot::setInstructIndex(int n)
+{
+  instructIndex = n;
 }
 
 void Robot::addInstruction(Instruct func, int arg, float seconds)
 {
-  if(numInstructs >= MAX_INSTRUCT){
+  if (numInstructs >= MAX_INSTRUCT)
+  {
+    Serial.print("MAX Instructions reached");
     return;
   }
   instructions[instructIndex] = Instruction(func, arg, seconds);
   instructIndex++;
+  numInstructs++;
 }
 
 void Robot::addInstruction(Instruct func, float seconds)
 {
-  if(numInstructs >= MAX_INSTRUCT){
+  if (numInstructs >= MAX_INSTRUCT)
+  {
+    Serial.print("MAX Instructions reached");
     return;
   }
   instructions[instructIndex] = Instruction(func, seconds);
+  instructIndex++;
   numInstructs++;
 }
 
@@ -118,13 +136,18 @@ void Robot::nextInstruction() // reset and run the next instruction
 {
   if (instructIndex < numInstructs)
   {
+    Serial.print("redInstruction");
+    isAccelerating = false;
     runInstruction(instructions[instructIndex]);
     currFunc = instructions[instructIndex].func;
     funcStartTime = millis();
     funcTime = instructions[instructIndex].getTime();
-    isAccelerating = false;
     instructIndex++;
     funcRan = true;
+  }
+  else
+  {
+    stop();
   }
 }
 
@@ -132,6 +155,7 @@ void Robot::forward(int speed)
 {
   rightMotor.forward(speed);
   leftMotor.forward(speed);
+  Serial.print("RFE");
   digitalWrite(27, HIGH);
 }
 
@@ -145,17 +169,15 @@ void Robot::right(int speed)
 {
   rightMotor.forward(speed);
   leftMotor.stop();
-
 }
 
 void Robot::left(int speed)
 {
   rightMotor.stop();
   leftMotor.forward(speed);
-
 }
 
-// Connor's stuff is everywhere >:3 
+// Connor's stuff is everywhere >:3
 
 void Robot::stop()
 {
@@ -172,24 +194,30 @@ void Robot::accelerate(int setpoint)
 void Robot::updateAccel(double currSeconds)
 {
   double mult = (currSeconds - funcStartTime) / funcTime;
+  if(mult > 1){ mult = 1;}
   currSpeed = setpoint * mult;
+  Serial.print("Acceleration Speed: ");
+  Serial.println(currSpeed);
   forward(currSpeed);
 }
 
 void Robot::update()
 {
-  if(!funcRan){ // this and next if statement make a toggle
+  if (!funcRan)
+  { // this and next if statement make a toggle
     nextInstruction();
   }
 
-  if(funcRan){
-    if(millis() - funcStartTime >= funcTime){
+  if (funcRan)
+  {
+    if (millis() - funcStartTime >= funcTime)
+    {
       funcRan = false;
       digitalWrite(27, LOW);
     }
   }
 
-  if(isAccelerating)
+  if (isAccelerating)
   {
     updateAccel(millis());
   }
@@ -201,9 +229,9 @@ AbstractRobot::AbstractRobot()
 {
   robot = Robot();
 }
-AbstractRobot::AbstractRobot(int rmfp, int rmbp, int lmfp, int lmbp)
+AbstractRobot::AbstractRobot(int rmep, int rmdp, int lmep, int lmdp)
 {
-  robot = Robot(rmfp, rmbp, lmfp, lmbp);
+  robot = Robot(rmep, rmdp, lmep, lmdp);
 }
 
 void AbstractRobot::forward(float seconds, int speed)

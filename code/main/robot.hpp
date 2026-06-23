@@ -6,7 +6,8 @@ class Robot;
 class AbstractRobot;
 class Instruction;
 
-enum Instruct {
+enum Instruct
+{
   STOP,
   WAIT,
   FORWARD,
@@ -20,14 +21,14 @@ enum Instruct {
 class Motor
 {
 public:
-  Motor(int backwardPin = -1, int forwardPin = -1);
+  Motor(int enablePin = -1, int dirPin = -1);
   void stop();
   void forward(int speed);
   void backward(int speed);
 
 private:
-  int forwardPin;
-  int backwardPin;
+  int dirPin;
+  int enablePin;
 };
 
 // INSTRUCTION CLASS
@@ -44,8 +45,6 @@ public:
   float getTime();
 
 private:
-  
-  
 };
 
 // ROBOT CLASS
@@ -64,8 +63,9 @@ public:
   void addInstruction(Instruct func, int arg, float seconds);
   void addInstruction(Instruct func, float seconds = -1); // mainly for stop and wait
   void nextInstruction();
-  void runInstruction(Instruction& instruction);
+  void runInstruction(Instruction &instruction);
   void update();
+  void setInstructIndex(int n);
 
 private:
   Motor rightMotor;
@@ -99,7 +99,6 @@ public:
   void stop();
   void wait(float seconds);
   void accelerate(float seconds, int setpoint);
-    
 };
 
 #endif

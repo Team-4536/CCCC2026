@@ -1,9 +1,11 @@
 #include "list"
 #include "robot.hpp"
+#include "arduino.h"
 
 AbstractRobot robot;
 
-void fakeMain(){
+void fakeMain()
+{
   // put your main code here, instructions for the robot:
   // functions:
   // 1. forward : takes a time in seconds and a speed
@@ -12,34 +14,35 @@ void fakeMain(){
   // 4. left : takes a time in seconds and a speed
   // 5. stop : takes no arguments
   // 6. accelerate : takes a time in seconds and a speed to accelerate to
-  robot.accelerate(1, 255);
-  robot.right(1, 255);
-  robot.left(1, 255);
+  robot.accelerate(5, 255);
+  robot.forward(5, 255);
   robot.stop();
-  robot.forward(1, 255);
-  robot.wait(1);
-  robot.backward(1, 255);
+  robot.wait(3);
+  robot.backward(5, 255);
+  robot.right(2, 255);
+  robot.left(2, 255);
+  robot.robot.setInstructIndex(0);
 }
 
-const int right_motor_1 = 6;
-const int right_motor_2 = 7;
-const int left_motor_1 = 8;
-const int left_motor_2 = 9;
+const int right_enable_pin = 6;
+const int right_dir_pin = 7;
+const int left_enable_pin = 8;
+const int left_dir_pin = 9;
 const uint LED_Pin = 27;
 
 void setup()
 {
-  pinMode(right_motor_1, OUTPUT);
-  pinMode(right_motor_2, OUTPUT);
-  pinMode(left_motor_1, OUTPUT);
-  pinMode(left_motor_2, OUTPUT);
+  pinMode(right_enable_pin, OUTPUT);
+  pinMode(right_dir_pin, OUTPUT);
+  pinMode(left_enable_pin, OUTPUT);
+  pinMode(left_dir_pin, OUTPUT);
   pinMode(LED_Pin, OUTPUT);
-  robot = AbstractRobot(right_motor_1, right_motor_2, left_motor_1, left_motor_2);
+  robot = AbstractRobot(right_enable_pin, right_dir_pin, left_enable_pin, left_dir_pin);
   fakeMain();
+  
 }
 
 void loop()
 {
   robot.robot.update();
 }
-
