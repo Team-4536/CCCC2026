@@ -6,22 +6,17 @@ AbstractRobot robot;
 
 void fakeMain()
 {
-  // put your main code here, instructions for the robot:
-  // functions:
-  // 1. forward : takes a time in seconds and a speed
-  // 2. backward : takes a time in seconds and a speed
-  // 3. right : takes a time in seconds and a speed
-  // 4. left : takes a time in seconds and a speed
-  // 5. stop : takes no arguments
-  // 6. accelerate : takes a time in seconds and a speed to accelerate to
-  robot.accelerate(5, 255);
-  robot.forward(5, 255);
-  robot.stop();
-  robot.wait(3);
-  robot.backward(5, 255);
-  robot.right(2, 255);
-  robot.left(2, 255);
-  robot.robot.setInstructIndex(0);
+  // Lets make the robt accelerate!
+
+  // You should have a basic understanding of what a function does, lets take it a step further
+
+  // First, you have to learn what an object is
+  //  - This includes learning about Classes
+  // Use what you've learned about functions and notice the similarities in how to call methods
+
+  // Instructions: Call the Method "accelerate" on the robot
+  // then Call the now Method "forward" on the robot
+  // try to figure out what arguments you have to give to the Methods
 }
 
 const int right_enable_pin = 6;
@@ -39,7 +34,7 @@ void setup()
   pinMode(LED_Pin, OUTPUT);
   robot = AbstractRobot(right_enable_pin, right_dir_pin, left_enable_pin, left_dir_pin);
   fakeMain();
-  
+  robot.robot.setInstructIndex(0);
 }
 
 void loop()
