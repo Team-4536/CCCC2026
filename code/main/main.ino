@@ -15,9 +15,11 @@ void fakeMain()
   // Use what you've learned about functions and notice the similarities in how to call methods
 
   // Instructions: Call the Method "accelerate" on the robot
-  // then Call the now Method "forward" on the robot
-  // try to figure out what arguments you have to give to the Methods
+  // Then Call the now Method "forward" on the robot
+  // Try to figure out what arguments you have to give to the Methods
 }
+
+// Dont worry about this stuff for now :D
 
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
