@@ -10,6 +10,7 @@ void fakeMain()
 
   // Lets learn what a function is
   //  - This includes learning about fucntion parameters / arguments
+  //  - This is also a good time to talk about Variable Types like Int and Float
   
   // Instructions: Call the Function "forward"
   // Specify a time for how long to run the robot for and how fast the robot should go
