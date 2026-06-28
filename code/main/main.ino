@@ -16,7 +16,6 @@ void fakeMain()
   // Instructions: Call the Method "forward" on the Robot
   // Specify a time for how long to run the robot for and how fast the robot should go
 
-  robot.robot.setInstructIndex(0);
 }
 
 // Dont worry about this stuff for now :D
@@ -36,6 +35,7 @@ void setup()
   pinMode(LED_Pin, OUTPUT);
   robot = AbstractRobot(right_enable_pin, right_dir_pin, left_enable_pin, left_dir_pin);
   fakeMain();
+  robot.robot.setInstructIndex(0);
   
 }
 
