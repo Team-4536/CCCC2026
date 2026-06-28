@@ -2,23 +2,23 @@
 #include "robot.hpp"
 #include "arduino.h"
 
-AbstractRobot robot;
+void forward(float seconds, int speed);
 
 void fakeMain()
 {
   // Lets move the robot forward!
 
-  // First, you have to learn what an object is
-  //  - This includes learning about Classes
-  // Then, you have to learn what a function is and how to call methods
+  // Lets learn what a function is
   //  - This includes learning about fucntion parameters / arguments
   
-  // Instructions: Call the Method "forward" on the Robot
+  // Instructions: Call the Function "forward"
   // Specify a time for how long to run the robot for and how fast the robot should go
 
 }
 
 // Dont worry about this stuff for now :D
+
+AbstractRobot robot;
 
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
@@ -42,4 +42,8 @@ void setup()
 void loop()
 {
   robot.robot.update();
+}
+
+void forward(float seconds, int speed){
+  robot.forward(seconds, speed);
 }
