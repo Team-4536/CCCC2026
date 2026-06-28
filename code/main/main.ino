@@ -21,8 +21,9 @@ void fakeMain()
   robot.backward(5, 255);
   robot.right(2, 255);
   robot.left(2, 255);
-  robot.robot.setInstructIndex(0);
 }
+
+// Dont worry about this stuff for now :D
 
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
@@ -39,6 +40,7 @@ void setup()
   pinMode(LED_Pin, OUTPUT);
   robot = AbstractRobot(right_enable_pin, right_dir_pin, left_enable_pin, left_dir_pin);
   fakeMain();
+  robot.robot.setInstructIndex(0);
   
 }
 
