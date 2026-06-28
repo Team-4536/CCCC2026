@@ -16,6 +16,7 @@ void fakeMain()
   // Instructions: Call the Method "forward" on the Robot
   // Specify a time for how long to run the robot for and how fast the robot should go
 
+  robot.robot.setInstructIndex(0);
 }
 
 // Dont worry about this stuff for now :D
