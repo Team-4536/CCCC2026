@@ -4,23 +4,36 @@
 
 AbstractRobot robot;
 
+// Store your number from step 4 in the variable here, 
+// Using the equals sign "=" and then your number:
+float TURN_90;
+
 void fakeMain()
 {
-  // put your main code here, instructions for the robot:
-  // functions:
-  // 1. forward : takes a time in seconds and a speed
-  // 2. backward : takes a time in seconds and a speed
-  // 3. right : takes a time in seconds and a speed
-  // 4. left : takes a time in seconds and a speed
-  // 5. stop : takes no arguments
-  // 6. accelerate : takes a time in seconds and a speed to accelerate to
-  robot.accelerate(5, 255);
-  robot.forward(5, 255);
-  robot.stop();
-  robot.wait(3);
-  robot.backward(5, 255);
-  robot.right(2, 255);
-  robot.left(2, 255);
+  // Lets turn the robot 90 degrees!
+
+  // Feel free at this point to explore the different Methods the robot has
+  // These include:
+  //  - backward
+  //  - right
+  //  - left
+  //  - stop
+
+  // The Right and Left Methods are kind of inconvenient because they turn based on seconds
+  // How are we supposed to know what amount of time will turn 90 degrees?
+  // This also makes some inconsistencies:
+  // Given the same amount of time, turning at full speed will have a different effect than turning at a slower speed
+
+  // Instructions:
+  // 1. Try turning the robot with the right or left methods and pick a random time
+  //    - Keep the speed at full for now (255)
+  // 2. Run the code on the robot and see how far the robot turns
+  // 3. Keep tuning the time you put in to be close to a 90 degree turn
+  // 4. Store the time you find best in the varibale at the top
+  //    - A good time to learn about Constants and naming conventions like camelCase and snake_case
+  // 5. Write code that will move the robot forward, turn left 90 degrees, forward again, and then right 90 degrees
+  //    - Use your Variable!
+  
 }
 
 // Dont worry about this stuff for now :D
