@@ -6,23 +6,19 @@ AbstractRobot robot;
 
 void fakeMain()
 {
-  // put your main code here, instructions for the robot:
-  // functions:
-  // 1. forward : takes a time in seconds and a speed
-  // 2. backward : takes a time in seconds and a speed
-  // 3. right : takes a time in seconds and a speed
-  // 4. left : takes a time in seconds and a speed
-  // 5. stop : takes no arguments
-  // 6. accelerate : takes a time in seconds and a speed to accelerate to
-  robot.accelerate(5, 255);
-  robot.forward(5, 255);
-  robot.stop();
-  robot.wait(3);
-  robot.backward(5, 255);
-  robot.right(2, 255);
-  robot.left(2, 255);
-  robot.robot.setInstructIndex(0);
+  // Lets move the robot forward!
+
+  // First, you have to learn what an object is
+  //  - This includes learning about Classes
+  // Then, you have to learn what a function is and how to call methods
+  //  - This includes learning about fucntion parameters / arguments
+  
+  // Instructions: Call the Method "forward" on the Robot
+  // Specify a time for how long to run the robot for and how fast the robot should go
+
 }
+
+// Dont worry about this stuff for now :D
 
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
