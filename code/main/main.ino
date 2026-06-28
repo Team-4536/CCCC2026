@@ -18,6 +18,7 @@ void fakeMain()
   //  - right
   //  - left
   //  - stop
+  //  - wait
 
   // The Right and Left Methods are kind of inconvenient because they turn based on seconds
   // How are we supposed to know what amount of time will turn 90 degrees?
