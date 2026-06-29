@@ -47,8 +47,8 @@ void turn360(){
 }
 
 void turn180(){
-  robot.right(TURN_90);
-  robot.right(TURN_90);
+  robot.right(TURN_90, 255);
+  robot.right(TURN_90, 255);
 };
 
 // Dont worry about this stuff for now :D
@@ -60,7 +60,7 @@ const int left_dir_pin = 9;
 const uint LED_Pin = 27;
 
 void setup()
-
+{
   pinMode(right_enable_pin, OUTPUT);
   pinMode(right_dir_pin, OUTPUT);
   pinMode(left_enable_pin, OUTPUT);
