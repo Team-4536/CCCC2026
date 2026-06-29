@@ -2,33 +2,14 @@
 #include "robot.hpp"
 #include "arduino.h"
 
-AbstractRobot robot;
-
-void fakeMain()
-{
-  // put your main code here, instructions for the robot:
-  // functions:
-  // 1. forward : takes a time in seconds and a speed
-  // 2. backward : takes a time in seconds and a speed
-  // 3. right : takes a time in seconds and a speed
-  // 4. left : takes a time in seconds and a speed
-  // 5. stop : takes no arguments
-  // 6. accelerate : takes a time in seconds and a speed to accelerate to
-  robot.accelerate(5, 255);
-  robot.forward(5, 255);
-  robot.stop();
-  robot.wait(3);
-  robot.backward(5, 255);
-  robot.right(2, 255);
-  robot.left(2, 255);
-}
-
-// Dont worry about this stuff for now :D
+Robot robot;
 
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
 const int left_enable_pin = 8;
 const int left_dir_pin = 9;
+const int ECHO_PIN = -1;
+const int TRIGGER_PIN = -1;
 const uint LED_Pin = 27;
 
 void setup()
@@ -37,14 +18,15 @@ void setup()
   pinMode(right_dir_pin, OUTPUT);
   pinMode(left_enable_pin, OUTPUT);
   pinMode(left_dir_pin, OUTPUT);
+  pinMode(TRIGGER_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
   pinMode(LED_Pin, OUTPUT);
-  robot = AbstractRobot(right_enable_pin, right_dir_pin, left_enable_pin, left_dir_pin);
-  fakeMain();
-  robot.robot.setInstructIndex(0);
+  robot = Robot(right_enable_pin, right_dir_pin, left_enable_pin, left_dir_pin, ECHO_PIN, TRIGGER_PIN);
   
 }
 
 void loop()
 {
-  robot.robot.update();
+  // For this project, we will be working inside of robot.update() mainly
+  robot.update();
 }

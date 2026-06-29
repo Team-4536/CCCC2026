@@ -26,120 +26,17 @@ void Motor::backward(int speed)
   analogWrite(enablePin, speed);
 }
 
-// INSTRUCTION CLASS
-Instruction::Instruction()
-{
-  std::cout << "NOOOO" << std::endl;
-}
-
-Instruction::Instruction(Instruct func, int arg, float seconds)
-{
-  this->func = func;
-  this->arg = arg;
-  this->seconds = seconds;
-}
-
-Instruction::Instruction(Instruct func, float seconds)
-{
-  this->func = func;
-  this->seconds = seconds;
-}
-
-void Robot::runInstruction(Instruction &instruction)
-{
-
-  Instruct func = instruction.func;
-
-  int arg = instruction.arg;
-
-  switch (func)
-  {
-  case FORWARD:
-    forward(arg);
-    break;
-  case BACKWARD:
-    backward(arg);
-    break;
-  case LEFT:
-    left(arg);
-    break;
-  case RIGHT:
-    right(arg);
-    break;
-  case ACCELERATE:
-    accelerate(arg);
-    break;
-  case STOP:
-      stop();
-      break;
-  case WAIT:
-    break;
-  default:
-    Serial.print("Switch is buns");
-  }
-}
-
-float Instruction::getTime() // return the time in milliseconds
-{
-  return seconds * 1000; // convert to milliseconds because milis()
-}
-
 // ROBOT CLASS
 Robot::Robot()
 {
 }
 
-Robot::Robot(int rmep, int rmdp, int lmep, int lmdp)
+Robot::Robot(int rmep, int rmdp, int lmep, int lmdp, int echo, int trigger)
 {
   rightMotor = Motor(rmep, rmdp);
   leftMotor = Motor(lmep, lmdp);
-}
-
-void Robot::setInstructIndex(int n)
-{
-  instructIndex = n;
-}
-
-void Robot::addInstruction(Instruct func, int arg, float seconds)
-{
-  if (numInstructs >= MAX_INSTRUCT)
-  {
-    Serial.print("MAX Instructions reached");
-    return;
-  }
-  instructions[instructIndex] = Instruction(func, arg, seconds);
-  instructIndex++;
-  numInstructs++;
-}
-
-void Robot::addInstruction(Instruct func, float seconds)
-{
-  if (numInstructs >= MAX_INSTRUCT)
-  {
-    Serial.print("MAX Instructions reached");
-    return;
-  }
-  instructions[instructIndex] = Instruction(func, seconds);
-  instructIndex++;
-  numInstructs++;
-}
-
-void Robot::nextInstruction() // reset and run the next instruction
-{
-  if (instructIndex < numInstructs)
-  {
-    isAccelerating = false;
-    runInstruction(instructions[instructIndex]);
-    currFunc = instructions[instructIndex].func;
-    funcStartTime = millis();
-    funcTime = instructions[instructIndex].getTime();
-    instructIndex++;
-    funcRan = true;
-  }
-  else
-  {
-    stop();
-  }
+  echoPin = echo;
+  triggerPin = trigger;
 }
 
 void Robot::forward(int speed)
@@ -184,75 +81,51 @@ void Robot::accelerate(int setpoint)
 void Robot::updateAccel(double currSeconds)
 {
   double mult = (currSeconds - funcStartTime) / funcTime;
-  if(mult > 1){ mult = 1;}
+  if(mult > 1){ 
+    mult = 1;
+    isAccelerating - false;
+  }
   currSpeed = setpoint * mult;
   forward(currSpeed);
 }
 
+double Robot::getSonicDist(){
+
+  // Send a HIGH Pulse to triggerPin that is 10us Long
+  digitalWrite(triggerPin, LOW); // Trigger should already be low, just in case
+  delayMicroseconds(2); // This is just like delay() but in microseconds
+  digitalWrite(triggerPin, HIGH); // set HIGH
+  delayMicroseconds(10); // wait 10us
+  digitalWrite(triggerPin, LOW); // set LOW
+
+  double duration = pulseIn(echoPin, HIGH); // Measure pulse width on echoPin
+
+  double distance = duration / 58.0; // Calc distance duration / speed_of_sound (cm/us)
+
+  Serial.print(distance);
+  Serial.println("cm");
+
+  return distance;
+}
+
 void Robot::update()
 {
-  if (!funcRan)
-  { // this and next if statement make a toggle
-    nextInstruction();
-  }
+  // Lets make a wall following robot!
 
-  if (funcRan)
-  {
-    if (millis() - funcStartTime >= funcTime)
-    {
-      funcRan = false;
-      digitalWrite(27, LOW);
-    }
-  }
+  // This space is a bit different than what you've been working in so far
+  // Most software systems can be boiled down into two main sections: A setup and a loop
+  // You've been dealing with the setup section so far, essentially planning out what the robot does
+  // However now you will be working inside of the loop where you will update the robot in real time
 
+  // Remeber using for loops? This is essentielly that except the loop never stops
+  // If we want any kind of real time data reading (which we will), a loop is the best option
+  
+
+  // This makes accelerate work
   if (isAccelerating)
   {
     updateAccel(millis());
   }
 }
 
-// ABSTRACT ROBOT CLASS
 
-AbstractRobot::AbstractRobot()
-{
-  robot = Robot();
-}
-AbstractRobot::AbstractRobot(int rmep, int rmdp, int lmep, int lmdp)
-{
-  robot = Robot(rmep, rmdp, lmep, lmdp);
-}
-
-void AbstractRobot::forward(float seconds, int speed)
-{
-  robot.addInstruction(Instruct::FORWARD, speed, seconds);
-}
-
-void AbstractRobot::backward(float seconds, int speed)
-{
-  robot.addInstruction(Instruct::BACKWARD, speed, seconds);
-}
-
-void AbstractRobot::right(float seconds, int speed)
-{
-  robot.addInstruction(Instruct::RIGHT, speed, seconds);
-}
-
-void AbstractRobot::left(float seconds, int speed)
-{
-  robot.addInstruction(Instruct::LEFT, speed, seconds);
-}
-
-void AbstractRobot::stop()
-{
-  robot.addInstruction(Instruct::STOP);
-}
-
-void AbstractRobot::accelerate(float seconds, int setpoint)
-{
-  robot.addInstruction(Instruct::ACCELERATE, setpoint, seconds);
-}
-
-void AbstractRobot::wait(float seconds)
-{
-  robot.addInstruction(Instruct::WAIT, seconds);
-}
