@@ -47,21 +47,8 @@ Instruction::Instruction(Instruct func, float seconds)
 
 void Robot::runInstruction(Instruction &instruction)
 {
-  Serial.print("Instruction Running");
-  Instruct func = instruction.func;
 
-  if (instruction.arg == -1)
-  { // room for more instructions with no args
-    switch (func)
-    {
-    case STOP:
-      stop();
-      break;
-    case WAIT:
-      break;
-    }
-    return;
-  }
+  Instruct func = instruction.func;
 
   int arg = instruction.arg;
 
@@ -81,6 +68,11 @@ void Robot::runInstruction(Instruction &instruction)
     break;
   case ACCELERATE:
     accelerate(arg);
+    break;
+  case STOP:
+      stop();
+      break;
+  case WAIT:
     break;
   default:
     Serial.print("Switch is buns");
@@ -136,7 +128,6 @@ void Robot::nextInstruction() // reset and run the next instruction
 {
   if (instructIndex < numInstructs)
   {
-    Serial.print("redInstruction");
     isAccelerating = false;
     runInstruction(instructions[instructIndex]);
     currFunc = instructions[instructIndex].func;
@@ -155,7 +146,6 @@ void Robot::forward(int speed)
 {
   rightMotor.forward(speed);
   leftMotor.forward(speed);
-  Serial.print("RFE");
   digitalWrite(27, HIGH);
 }
 
@@ -196,8 +186,6 @@ void Robot::updateAccel(double currSeconds)
   double mult = (currSeconds - funcStartTime) / funcTime;
   if(mult > 1){ mult = 1;}
   currSpeed = setpoint * mult;
-  Serial.print("Acceleration Speed: ");
-  Serial.println(currSpeed);
   forward(currSpeed);
 }
 
