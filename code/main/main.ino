@@ -3,64 +3,49 @@
 #include "arduino.h"
 
 void turn180();
+void turn360();
+spinAround(int n);
 AbstractRobot robot;
 
 // Your number from level 3 here:
-//  -Oh no! looks like I forogt to type the varible, what would be good at storing a decimal?
-const ??? TURN_90;
+const float TURN_90;
 
 void fakeMain()
 {
-  // Lets make the robot spin around a BUNCH
-
-  // You'll need your number from level 3 put into the variable at the top
   
-  // The turn180() function wasn't a huge pain to make because you only had to copy and paste the right (or left) command twice
-  // But what if I asked you to turn 5 million degrees? Or less extreme, make the robot spin around 5 times
-  // You could make a custom function called "spinAround5Tims" and copy and paste the turn 90 degree command 20 times...
-  // Or we could use a loop! Turn 90 degrees, 20 times
-  //  - If you don't want to know all the nitty gritty of a for loop, skip ahead to the instructions at the bottom of fakeMain()
+  // Lets make the robot spin, but cooler 😎
 
-  // All loops start with the while loop, everthing in the brackets get repeated as long as the condition (called a Boolean) is true
+  // You'll need the number from level 3 for the variable at the top
 
-  while(true){
-    break; // I don't actually want to run this loop here so I break it early
-  }
+  // Custom functions and for loops have made your code super, but we can go even further beyond
+  // I'm confident you could make the robot spin around any number of times using a for loop
+  // but what if I wanted you to sping the robot around 5 times, and then move forward, and right after spin 7 times?
+  // You could just right another for loop for it, but it becomes a bit of a hassle after awhile, so lets fix that
 
-  // What we need to do though is check how many times we have looped or iterated through the code in the loop so here's how we do that
+  // We are going to make a function that takes an Argument, in this case, the number of times we want out loop to run
+  // If you remeber the for loop structure, the loop runs the amount of times the number we compare i to is
+  //  - If we want to loop 5 times, we set the condition to i < 5
+  // This is super convenient because we can sub in the 5 for any number we want and the loop will run that many times
 
-  int i = 0; // We'll make an int variable and name it i for iteration, it will track which loop we are on
+  // Nows a good time to learn more about arguments and parameters, you'll use one when making the spinAround() function
 
-  while(i < 5){ // This is our condition
-    // do code
-    i++; // This is shorthand notation for adding 1 to a variable
-  }
+  // Instructions: 
+  //  1. Write code in the spinAround() function to make the robot turn 360 degrees, n amount of times
+  //  2. Use the spinAround() function you made to make the robot spin around 5 times, move forward, and then spin around 7 times
 
-  // This will run the loop 5 times and here's how:
-  //  - Before every execution of code, the loop will check to see if the condition is true
-  //  - Since i starts at 0 and 0 is les than 5, the condition passes and the code runs
-  //  - Part of the code is to add 1 to the i variable, making it 1 after the first iteration
-  //  - Then the loop will check the condition again, i is now 1 but 1 is still less than 5 so it will pass
-  //  - This will continue and to track, i is 0: first loop, i is 1: second loop, i is 2: third loop, i is 3: fourth loop
-  //  - When i is 4, the condition will still pass, running the code a 5th time. 
-  //  - But now i is 5. 5 is not less than 5 so the loop stops running and our code ran a grand total of 5 times
-  
-  // Congratulations! you now know how a for loop works, so lets make one
-  // A for loop has different sytax from what you might excpect but it works the same
-  //  - All a for loop's syntax does differently is having the tracking variable be inside some parentheses
-
-
-  // Instructions: Using the loop below, make the robot spin 360 degrees around 5 times
-
-  int loops; // Set this to the amount of times you want your loop to run
-
-  for(int i = 0; i < loops; i++){ 
-    // Your code goes here
-  }  
-  
 }
 
-// Your function may have worked slightly differently and if it ain't broke: don't fix it
+void spinAround(int n){
+
+  // Write a loop utilizng n
+
+}
+
+void turn360(){
+  turn180();
+  turn180();
+}
+
 void turn180(){
   robot.right(TURN_90);
   robot.right(TURN_90);
@@ -75,7 +60,7 @@ const int left_dir_pin = 9;
 const uint LED_Pin = 27;
 
 void setup()
-{
+
   pinMode(right_enable_pin, OUTPUT);
   pinMode(right_dir_pin, OUTPUT);
   pinMode(left_enable_pin, OUTPUT);
