@@ -7,7 +7,7 @@ AbstractRobot robot;
 
 // Your number from level 3 here:
 //  -Oh no! looks like I forogt to type the varible, what would be good at storing a decimal?
-const float TURN_90; // TODO change float to ??? to have them type it themselves
+const ??? TURN_90;
 
 void fakeMain()
 {
