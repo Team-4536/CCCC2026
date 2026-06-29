@@ -4,7 +4,7 @@
 
 void turn180();
 void turn360();
-spinAround(int n);
+void spinAround(int n);
 AbstractRobot robot;
 
 // Your number from level 3 here:
