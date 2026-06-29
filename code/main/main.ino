@@ -62,8 +62,8 @@ void fakeMain()
 
 // Your function may have worked slightly differently and if it ain't broke: don't fix it
 void turn180(){
-  robot.right(TURN_90);
-  robot.right(TURN_90);
+  robot.right(TURN_90, 255);
+  robot.right(TURN_90, 255);
 };
 
 // Dont worry about this stuff for now :D
