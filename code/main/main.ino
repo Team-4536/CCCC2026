@@ -15,8 +15,8 @@ void setup() {
 void loop() {
 
   digitalWrite(right_enable_pin, HIGH);
-  delay(500);
+  delay(1000);
   digitalWrite(right_enable_pin, LOW);
-  delay(500);
+  delay(1000);
 
 }
