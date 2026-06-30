@@ -1,5 +1,3 @@
-
-
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
 const int left_enable_pin = 8;
