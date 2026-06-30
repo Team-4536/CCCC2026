@@ -89,7 +89,7 @@ void Robot::updateAccel(double currSeconds)
   forward(currSpeed);
 }
 
-double Robot::getSonicDist(){
+double Robot::getSonicDist(){ // Contains code from the big DJ Orser
 
   // Send a HIGH Pulse to triggerPin that is 10us Long
   digitalWrite(triggerPin, LOW); // Trigger should already be low, just in case
@@ -117,15 +117,30 @@ void Robot::update()
   // You've been dealing with the setup section so far, essentially planning out what the robot does
   // However now you will be working inside of the loop where you will update the robot in real time
 
-  // Remeber using for loops? This is essentielly that except the loop never stops
+  // Remeber using for loops? This is that except the loop never stops
   // If we want any kind of real time data reading (which we will), a loop is the best option
+
+  // With this challenge, the methods you may have used before work differently, some have been removed, and one has been added
+  // The new method getSonicDist() has become available (You can see the definition above this function)
+  // This method will return a distance in cm the ultra sonic sensor on the robot is from and object, in our case a wall
   
+  // TODO: block out wall follower
+  //  - Use trig to move towards a wall then follow it?
+  //    - Do middle schoolers understand trig? 😭
+  //    - Is the sonic sensor acurate at angles?
+  //  - Maybe it can follow a box around, like if distance becomes greater than x, turn 90 degree right and continue forward till we read a wall
+  //    - It would only work going one direction around the box
+  //  - If we had 2 we could use above concept to a maze follower (provided it only contained 90 turns)
+  //    - Kinda complicated 
 
   // This makes accelerate work
   if (isAccelerating)
   {
     updateAccel(millis());
   }
+
+  getSonicDist();
+  delay(500)
 }
 
 
