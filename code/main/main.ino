@@ -1,8 +1,8 @@
-const int right_enable_pin = 6;
-const int right_dir_pin = 7;
-const int left_enable_pin = 8;
-const int left_dir_pin = 9;
-const uint LED_PIN = 27;
+int right_enable_pin = 6;
+int right_dir_pin = 7;
+int left_enable_pin = 8;
+int left_dir_pin = 9;
+int LED_PIN = 27;
 
 void setup() {
   // put your setup code here, to run once:
@@ -23,7 +23,7 @@ void loop() {
   analogWrite(left_enable_pin, 255);
   digitalWrite(LED_PIN, LOW);
   delay(1000);
-  analogWrite(left_enable_pin, LOW);
+  analogWrite(left_enable_pin, 0);
   digitalWrite(LED_PIN, HIGH);
   delay(1000);
 
