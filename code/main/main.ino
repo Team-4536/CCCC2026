@@ -7,6 +7,12 @@ const int ECHO_PIN = 27;
 const int TRIGGER_PIN = 26;
 
 double getSonicDist();
+bool obstacleAhead();
+void forward(int speed);
+void right();
+
+double obstacleDist;
+const double AVOID_DIST = 5; // in cm
 
 void setup()
 {
@@ -17,23 +23,28 @@ void setup()
   pinMode(left_dir_pin, OUTPUT);
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
+
   digitalWrite(right_dir_pin, HIGH);
   digitalWrite(left_dir_pin, HIGH);
   analogWrite(right_enable_pin, 255);
+
+  obstacleDist = getSonicDist();
+
   Serial.begin(9600);
 }
 
 void loop()
 {
+  obstacleDist = getSonicDist();
 
-  analogWrite(left_enable_pin, 255);
-  digitalWrite(LED_PIN, LOW);
-  delay(500);
-  analogWrite(left_enable_pin, LOW);
-  digitalWrite(LED_PIN, HIGH);
-  delay(500);
-  Serial.print("Distance (cm): ");
-  Serial.println(getSonicDist());
+  if (obstacleAhead())
+  {
+    right();
+  }
+  else
+  {
+    forward(255);
+  }
 }
 
 double getSonicDist()
@@ -51,7 +62,28 @@ double getSonicDist()
   double distance = duration / 58.0; // Calc distance duration / speed_of_sound (cm/us)
 
   Serial.print(distance);
-  Serial.println("cm");
+  Serial.println(" cm");
 
   return distance;
+}
+
+bool obstacleAhead()
+{
+  return obstacleDist < AVOID_DIST
+}
+
+void forward(int speed)
+{
+  digitalWrite(right_dir_pin, HIGH);
+  digitalWrite(left_dir_pin, HIGH);
+  analogWrite(right_enable_pin, speed);
+  analogWrite(left_enable_pin, speed);
+}
+
+void right()
+{
+  digitalWrite(right_dir_pin, HIGH);
+  digitalWrite(left_dir_pin, HIGH);
+  analogWrite(right_enable_pin, 255);
+  analogWrite(left_enable_pin, LOW);
 }
