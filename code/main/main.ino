@@ -1,12 +1,12 @@
-const int right_enable_pin = 6;
-const int right_dir_pin = 7;
+int right_enable_pin = 6;
+int right_dir_pin = 7;
 
 void setup() {
   // put your setup code here, to run once:
   pinMode(right_enable_pin, OUTPUT);
   pinMode(right_dir_pin, OUTPUT);
 
-  digitalWrite(right_dir_pin, HIGH);
+  digitalWrite(right_dir_pin, HIGH); // For an extra challenge, make the motor move backward
 
 }
 
