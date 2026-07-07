@@ -17,6 +17,8 @@ void setup()
   pinMode(left_dir_pin, OUTPUT);
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+
   digitalWrite(right_dir_pin, HIGH);
   digitalWrite(left_dir_pin, HIGH);
   analogWrite(right_enable_pin, 255);
@@ -28,9 +30,11 @@ void loop()
 
   analogWrite(left_enable_pin, 255);
   digitalWrite(LED_PIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(500);
   analogWrite(left_enable_pin, LOW);
   digitalWrite(LED_PIN, HIGH);
+  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
   delay(500);
   Serial.print("Distance (cm): ");
   Serial.println(getSonicDist());
