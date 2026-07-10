@@ -23,7 +23,7 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(LED_PIN, OUTPUT);
   pinMode(LED_PIN_2, OUTPUT);
-  
+
   digitalWrite(right_dir_pin, HIGH);
   digitalWrite(left_dir_pin, HIGH);
   analogWrite(right_enable_pin, 255);
@@ -36,12 +36,12 @@ void loop()
   analogWrite(left_enable_pin, 255);
   digitalWrite(LED_PIN, LOW);
   digitalWrite(LED_PIN_2, LOW);
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+  digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
   delay(500);
   analogWrite(left_enable_pin, LOW);
   digitalWrite(LED_PIN, HIGH);
   digitalWrite(LED_PIN_2, HIGH);
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+  digitalWrite(LED_BUILTIN, LOW); // turn the LED off by making the voltage LOW
   delay(500);
   Serial.print("Distance (cm): ");
   Serial.println(getSonicDist());
@@ -59,7 +59,7 @@ double getSonicDist()
 
   double duration = pulseIn(ECHO_PIN, HIGH); // Measure pulse width on echoPin
 
-  double distance = duration / 58.0; // Calc distance duration / speed_of_sound (cm/us)
+  double distance = duration / 58.0; // Calc distance = duration / speed_of_sound (cm/us)
 
   Serial.print(distance);
   Serial.println("cm");
