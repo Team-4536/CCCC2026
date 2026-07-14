@@ -38,7 +38,7 @@ void loop()
   digitalWrite(LED_PIN_2, LOW);
   digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
   delay(500);
-  analogWrite(left_enable_pin, LOW);
+  analogWrite(left_enable_pin, 0);
   digitalWrite(LED_PIN, HIGH);
   digitalWrite(LED_PIN_2, HIGH);
   digitalWrite(LED_BUILTIN, LOW); // turn the LED off by making the voltage LOW
