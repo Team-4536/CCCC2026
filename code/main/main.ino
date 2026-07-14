@@ -29,7 +29,7 @@ void loop()
   analogWrite(left_enable_pin, 255);
   digitalWrite(LED_PIN, LOW);
   delay(500);
-  analogWrite(left_enable_pin, LOW);
+  analogWrite(left_enable_pin, 0);
   digitalWrite(LED_PIN, HIGH);
   delay(500);
   Serial.print("Distance (cm): ");
