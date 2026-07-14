@@ -1,68 +1,50 @@
-const int right_enable_pin = 6;
-const int right_dir_pin = 7;
-const int left_enable_pin = 8;
-const int left_dir_pin = 9;
-const int LED_PIN = 13;
-const int LED_PIN_2 = 18;
-const int ECHO_PIN = 27;
-const int TRIGGER_PIN = 26;
+int LED_Pin = 13;
+int right_Motor = 7;
+int right_Motor_Dir = 6;
+int left_Motor = 9;
+int left_Motor_Dir = 8; 
+int echo_pin = 27;
+int trig_pin = 26;
 
-double getSonicDist();
-
-void setup()
-{
+void setup() {
   // put your setup code here, to run once:
-  pinMode(right_enable_pin, OUTPUT);
-  pinMode(right_dir_pin, OUTPUT);
-  pinMode(left_enable_pin, OUTPUT);
-  pinMode(left_dir_pin, OUTPUT);
+  pinMode(LED_Pin, OUTPUT);
+  pinMode(right_Motor, OUTPUT);
+  pinMode(right_Motor_Dir, OUTPUT);
+  pinMode(left_Motor, OUTPUT);
+  pinMode(left_Motor_Dir, OUTPUT);
+  pinMode(echo_pin, INPUT);
+  pinMode(trig_pin, OUTPUT);
 
-  pinMode(TRIGGER_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
-
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(LED_PIN, OUTPUT);
-  pinMode(LED_PIN_2, OUTPUT);
-  
-  digitalWrite(right_dir_pin, HIGH);
-  digitalWrite(left_dir_pin, HIGH);
-  analogWrite(right_enable_pin, 255);
+  digitalWrite(right_Motor_Dir, LOW);
+  digitalWrite(left_Motor_Dir, LOW);
   Serial.begin(9600);
 }
 
-void loop()
-{
+void loop() {
+  // put your main code here, to run repeatedly:
 
-  analogWrite(left_enable_pin, 255);
-  digitalWrite(LED_PIN, LOW);
-  digitalWrite(LED_PIN_2, LOW);
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(500);
-  analogWrite(left_enable_pin, LOW);
-  digitalWrite(LED_PIN, HIGH);
-  digitalWrite(LED_PIN_2, HIGH);
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(500);
-  Serial.print("Distance (cm): ");
-  Serial.println(getSonicDist());
-}
+  digitalWrite(trig_pin, LOW);
+  delay(20);
+  digitalWrite(trig_pin, HIGH); // Ultrasonic sensor makes a sound waves
+  delay(20);
+  digitalWrite(trig_pin, LOW);
+  long return_time = pulseIn(echo_pin, HIGH); 
+  // Get the time it takes to hear the sound wave bounce back
 
-double getSonicDist()
-{ // Contains code from the big DJ Orser
+  float distance_cm = (return_time * 0.0343)/2;
+  if (distance_cm < 50) {
+	analogWrite(right_Motor, 255); // This turns the right motor off
+	analogWrite(left_Motor, 0); // This turns the left motor off
+  digitalWrite(LED_Pin, HIGH);
+  }
 
-  // Send a HIGH Pulse to triggerPin that is 10us Long
-  digitalWrite(TRIGGER_PIN, LOW);  // Trigger should already be low, just in case
-  delayMicroseconds(2);            // This is just like delay() but in microseconds
-  digitalWrite(TRIGGER_PIN, HIGH); // set HIGH
-  delayMicroseconds(10);           // wait 10us
-  digitalWrite(TRIGGER_PIN, LOW);  // set LOW
+  else {
+	analogWrite(right_Motor, 255); // This turns the right motor on
+	analogWrite(left_Motor, 255);
+  digitalWrite(LED_Pin, LOW); // This turns the left motor on
+  }
 
-  double duration = pulseIn(ECHO_PIN, HIGH); // Measure pulse width on echoPin
+  Serial.println(distance_cm);
 
-  double distance = duration / 58.0; // Calc distance duration / speed_of_sound (cm/us)
-
-  Serial.print(distance);
-  Serial.println("cm");
-
-  return distance;
 }
