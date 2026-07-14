@@ -1,50 +1,21 @@
-const int right_enable_pin = 6;
-const int right_dir_pin = 7;
-const int left_enable_pin = 8;
-const int left_dir_pin = 9;
-const int LED_PIN = 13;
 const int ECHO_PIN = 27;
 const int TRIGGER_PIN = 26;
 
 double getSonicDist();
-bool obstacleAhead();
-void forward(int speed);
-void right();
-
-double obstacleDist;
-const double AVOID_DIST = 5; // in cm
 
 void setup()
 {
-  // put your setup code here, to run once:
-  pinMode(right_enable_pin, OUTPUT);
-  pinMode(right_dir_pin, OUTPUT);
-  pinMode(left_enable_pin, OUTPUT);
-  pinMode(left_dir_pin, OUTPUT);
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
-
-  digitalWrite(right_dir_pin, HIGH);
-  digitalWrite(left_dir_pin, HIGH);
-  analogWrite(right_enable_pin, 255);
-
-  obstacleDist = getSonicDist();
 
   Serial.begin(9600);
 }
 
 void loop()
 {
-  obstacleDist = getSonicDist();
-
-  if (obstacleAhead())
-  {
-    right();
-  }
-  else
-  {
-    forward(255);
-  }
+  Serial.print("Distance (cm): ");
+  Serial.println(getSonicDist());
+  delay(500);
 }
 
 double getSonicDist()
