@@ -1,9 +1,17 @@
+// MinuteBots VroomVroom Racing Bot
+
+// Motor Pins based on this wiring diagram:
+// https://docs.google.com/document/d/1Z0HQruF4fZ4iedc9Ajxx0QdBtY-EvYfFhaaQBYORKY0/edit?tab=t.0#heading=h.c1hv1ob3pulj
 const int right_enable_pin = 6;
 const int right_dir_pin = 7;
 const int left_enable_pin = 8;
 const int left_dir_pin = 9;
+
+// Basic LED Pins
 const int LED_PIN = 13;
 const int LED_PIN_2 = 18;
+
+// Sonar Pins
 const int ECHO_PIN = 27;
 const int TRIGGER_PIN = 26;
 
