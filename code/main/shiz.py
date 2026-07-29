@@ -1,6 +1,6 @@
 import math
-startAngle = 30
-turnAngle = 45
+startAngle = 120
+turnAngle = 15
 
 def degSin(angle: float):
     return math.sin(math.radians(angle))
@@ -16,7 +16,7 @@ def generateDistances(angle: float) -> list[float]:
     return [1, 1 / (degSin(180 - startAngle - angle) / degSin(startAngle))]
 
 def getAngle(d1: float, d2: float, angle: float):
-    return math.degrees(aSinGood((d1 * degSin(angle))/getWallLen(d1, d2, angle))) - turnAngle
+    return math.degrees(aSinGood((d1 * degSin(angle))/getWallLen(d1, d2, angle)))
 
 def getWallLen(d1: float, d2: float, angle: float):
     return math.sqrt(d2**2 + d1**2 - 2*d2*d1*degCos(angle))

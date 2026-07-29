@@ -1,7 +1,10 @@
-const int right_enable_pin = 6;
-const int right_dir_pin = 7;
-const int left_enable_pin = 8;
-const int left_dir_pin = 9;
+//#define _USE_MATH_DEFINES
+//#include <cmath>
+
+const int right_enable_pin = 7;
+const int right_dir_pin = 6;
+const int left_enable_pin = 9;
+const int left_dir_pin = 8;
 const int LED_PIN = 13;
 const int ECHO_PIN = 27;
 const int TRIGGER_PIN = 26;
@@ -13,10 +16,17 @@ bool obstacleAhead();
 void forward(int speed);
 void right(double degrees);
 void left(double degrees);
-float getDurFromDeg(double deg);
+double getDurFromDeg(double deg);
+double getAngle(double d1, double d2, double angle);
+double getWallLen(double d1, double d2, double angle);
 
-double obstacleDist;
+double dist1;
+double dist2;
+double wallLen;
+double errorAngle;
+
 const double AVOID_DIST = 5; // in cm
+const double TURN_ANGLE = 15; // in degrees
 
 void setup()
 {
@@ -28,28 +38,34 @@ void setup()
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
 
-  //obstacleDist = getSonicDist();
+  dist1 = getSonicDist();
 
   Serial.begin(9600);
 }
 
 void loop()
 {
-  // obstacleDist = getSonicDist();
+  dist1 = getSonicDist();
+  
+  if (obstacleAhead())
+  {
+    right(TURN_ANGLE);
+    dist2 = getSonicDist();
+    wallLen = getWallLen(dist1, dist2, TURN_ANGLE);
+    errorAngle = getAngle(dist1, dist1, TURN_ANGLE);
 
-  // if (obstacleAhead())
-  // {
-  //   right();
-  // }
-  // else
-  // {
-  //   forward(255);
-  // }
-  //right(1);
-  digitalWrite(right_dir_pin, HIGH);
-  digitalWrite(left_dir_pin, HIGH);
-  analogWrite(right_enable_pin, 255);
-  analogWrite(left_enable_pin, 255);
+    if(dist1 > dist2 && dist1 > wallLen){
+      left(errorAngle);
+    } else {
+      right(errorAngle);
+    }
+  }
+  else
+  {
+    forward(255);
+  }
+
+
 }
 
 double getSonicDist()
@@ -74,7 +90,7 @@ double getSonicDist()
 
 bool obstacleAhead()
 {
-  return obstacleDist < AVOID_DIST;
+  return dist1 < AVOID_DIST;
 }
 
 void forward(int speed)
@@ -102,7 +118,32 @@ void left(double degrees){
   delay(getDurFromDeg(degrees));
 }
 
-float getDurFromDeg(double deg){
+double getDurFromDeg(double deg){
 
   return 1000000;
 }
+
+double degToRads(double degs){
+  return M_PI/180.0 * degs;
+}
+
+double radsToDeg(double rads){
+  return rads / M_PI * 180;
+}
+
+double degSin(double angle){
+  return sin(degToRads(angle));
+}
+
+double degCos(double angle){
+  return cos(degToRads(angle));
+}
+
+double getWallLen(double d1, double d2, double angle){
+    return sqrt(pow(d2, 2) + pow(d1, 2) - 2*d2*d1*degCos(angle));
+}
+
+double getAngle(double d1, double d2, double angle){
+    return radsToDeg(asin((d1 * degSin(angle))/getWallLen(d1, d2, angle)));
+}
+
