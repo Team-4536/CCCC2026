@@ -16,7 +16,7 @@ def generateDistances(angle: float) -> list[float]:
     return [1, 1 / (degSin(180 - startAngle - angle) / degSin(startAngle))]
 
 def getAngle(d1: float, d2: float, angle: float):
-    return math.degrees(aSinGood((d1 * degSin(angle))/getWallLen(d1, d2, angle)))
+    return math.degrees(aSinGood((d1 * degSin(angle))/getWallLen(d1, d2, angle))) - turnAngle
 
 def getWallLen(d1: float, d2: float, angle: float):
     return math.sqrt(d2**2 + d1**2 - 2*d2*d1*degCos(angle))
