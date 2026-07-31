@@ -37,24 +37,3 @@ double getSonicDist()
 
   return distance;
 }
-
-bool obstacleAhead()
-{
-  return obstacleDist < AVOID_DIST
-}
-
-void forward(int speed)
-{
-  digitalWrite(right_dir_pin, HIGH);
-  digitalWrite(left_dir_pin, HIGH);
-  analogWrite(right_enable_pin, speed);
-  analogWrite(left_enable_pin, speed);
-}
-
-void right()
-{
-  digitalWrite(right_dir_pin, HIGH);
-  digitalWrite(left_dir_pin, HIGH);
-  analogWrite(right_enable_pin, 255);
-  analogWrite(left_enable_pin, LOW);
-}
