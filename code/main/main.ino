@@ -54,8 +54,8 @@ void loop()
     wallLen = getWallLen(dist1, dist2, TURN_ANGLE);
     errorAngle = getAngle(dist1, dist1, TURN_ANGLE);
 
-    if(dist1 > dist2 && dist1 > wallLen){
-      left(errorAngle);
+    if(errorAngle > 90){
+      left(180-errorAngle);
     } else {
       right(errorAngle);
     }
@@ -140,10 +140,15 @@ double degCos(double angle){
 }
 
 double getWallLen(double d1, double d2, double angle){
-    return sqrt(pow(d2, 2) + pow(d1, 2) - 2*d2*d1*degCos(angle));
+  return sqrt(pow(d2, 2) + pow(d1, 2) - 2*d2*d1*degCos(angle));
 }
 
 double getAngle(double d1, double d2, double angle){
-    return radsToDeg(asin((d1 * degSin(angle))/getWallLen(d1, d2, angle)));
+  double c = getWallLen(d1, d2, angle);
+  double numer = pow(d1, 2) - pow(c, 2) - pow(d2, 2);
+  double denom = -2 * c * d2;
+  double output = numer / denom;
+  output = max(-1.0, min(1.0, output));
+  return radsToDeg(acos(output));
 }
 
