@@ -1,7 +1,7 @@
-int right_enable_pin = 6;
-int right_dir_pin = 7;
-int left_enable_pin = 8;
-int left_dir_pin = 9;
+int right_enable_pin = 7;
+int right_dir_pin = 6;
+int left_enable_pin = 9;
+int left_dir_pin = 8;
 
 void setup()
 {
