@@ -9,9 +9,9 @@ const int LED_PIN = 13;
 const int ECHO_PIN = 27;
 const int TRIGGER_PIN = 26;
 
-const double FULL_ROT_TIME = 1;
 
-double getSonicDist();
+
+double getSonicDist(bool doDelay = false);
 bool obstacleAhead();
 void forward(int speed);
 void right(double degrees);
@@ -25,12 +25,24 @@ double dist2;
 double wallLen;
 double errorAngle;
 
-const double AVOID_DIST = 5; // in cm
+const double DIST_FROM_CENTER_OF_ROT = 17; // in cm
+const double AVOID_DIST = 10 + DIST_FROM_CENTER_OF_ROT; // in cm
 const double TURN_ANGLE = 15; // in degrees
+
+const int TRIALS = 7;
+const double TIMES_360[TRIALS] = {2.84, 3.06, 2.86, 2.56, 2.43, 2.82, 2.65}; // in seconds
+double sum = 0;
+double FULL_ROT_TIME; // in ms
 
 void setup()
 {
   // put your setup code here, to run once:
+
+  for(double time : TIMES_360){
+    sum += time * 1000; // convert to ms
+  }
+  double FULL_ROT_TIME = sum / TRIALS;
+
   pinMode(right_enable_pin, OUTPUT);
   pinMode(right_dir_pin, OUTPUT);
   pinMode(left_enable_pin, OUTPUT);
@@ -38,26 +50,32 @@ void setup()
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
 
+  Serial.begin(9600);
+
+  Serial.print("First: ");
   dist1 = getSonicDist();
 
-  Serial.begin(9600);
 }
 
 void loop()
 {
+  //Serial.print("Loop 1: ");
   dist1 = getSonicDist();
-  
+  //delay(500);
   if (obstacleAhead())
   {
+    //Serial.println("Obstacle");
+    dist1 = getSonicDist(true);
     right(TURN_ANGLE);
-    dist2 = getSonicDist();
+    //Serial.print("Loop 2: ");
+    dist2 = getSonicDist(true);
     wallLen = getWallLen(dist1, dist2, TURN_ANGLE);
     errorAngle = getAngle(dist1, dist1, TURN_ANGLE);
 
     if(errorAngle > 90){
-      left(180-errorAngle);
+      //left(180-errorAngle);
     } else {
-      right(errorAngle);
+      //right(errorAngle);
     }
   }
   else
@@ -68,7 +86,7 @@ void loop()
 
 }
 
-double getSonicDist()
+double getSonicDist(bool doDelay)
 { // Contains code from the big DJ Orser
 
   // Send a HIGH Pulse to triggerPin that is 10us Long
@@ -78,18 +96,30 @@ double getSonicDist()
   delayMicroseconds(10);           // wait 10us
   digitalWrite(TRIGGER_PIN, LOW);  // set LOW
 
-  double duration = pulseIn(ECHO_PIN, HIGH); // Measure pulse width on echoPin
+  double duration = 0; // Measure pulse width on echoPin
 
+  if(doDelay){
+    duration = pulseIn(ECHO_PIN, HIGH);
+  } else{
+    duration = pulseIn(ECHO_PIN, HIGH, 30000);
+  }
+
+  if(duration == 0){
+    return 400;
+  } 
+  
   double distance = duration / 58.0; // Calc distance duration / speed_of_sound (cm/us)
 
-  Serial.print(distance);
-  Serial.println(" cm");
+  //Serial.print(distance);
+  //Serial.println(" cm");
 
-  return distance;
+  return distance + DIST_FROM_CENTER_OF_ROT;
 }
 
 bool obstacleAhead()
 {
+  // Serial.print("YO: ");
+  // Serial.println(dist1);
   return dist1 < AVOID_DIST;
 }
 
@@ -120,7 +150,7 @@ void left(double degrees){
 
 double getDurFromDeg(double deg){
 
-  return 1000000;
+  return FULL_ROT_TIME * deg/360;
 }
 
 double degToRads(double degs){
