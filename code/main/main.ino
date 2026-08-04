@@ -26,25 +26,25 @@ double wallLen;
 double errorAngle;
 
 const double MAX_MEASURE = 40;                          // maximum distance (cm) from ultrasonic I will use for trig
-const double DIST_FROM_CENTER_OF_ROT = 17;              // in cm
+const double DIST_FROM_CENTER_OF_ROT = 1;              // in cm
 const double AVOID_DIST = 10 + DIST_FROM_CENTER_OF_ROT; // in cm
 const double TURN_ANGLE = 15;                           // in degrees
 
-const int TRIALS = 7;
-const double TIMES_360[TRIALS] = {2.84, 3.06, 2.86, 2.56, 2.43, 2.82, 2.65}; // in seconds
-double sum = 0;
+const int TRIALS = 5;
+const double TIMES_360[TRIALS] = {1.46, 1.53, 1.36, 1.39, 1.48}; // in seconds
 double FULL_ROT_TIME; // in ms
 double actualAngle;
 
 void setup()
 {
   // put your setup code here, to run once:
+  double sum = 0;
 
   for (double time : TIMES_360)
   {
     sum += time * 1000; // convert to ms
   }
-  double FULL_ROT_TIME = sum / TRIALS;
+  FULL_ROT_TIME = sum / TRIALS;
 
   pinMode(right_enable_pin, OUTPUT);
   pinMode(right_dir_pin, OUTPUT);
@@ -63,15 +63,27 @@ void loop()
 {
   // Serial.print("Loop 1: ");
   dist1 = getSonicDist();
+
+  if (dist1 == -1)
+  {
+    dist1 = 800;
+  }
   // delay(500);
   if (obstacleAhead())
   {
-    // Serial.println("Obstacle");
+    Serial.println("Obstacle");
     stop();
+    Serial.println("Reading First: ");
     dist1 = readWallDist();
+    Serial.println(dist1);
+
+    Serial.println("Turning");
     right(TURN_ANGLE);
-    // Serial.print("Loop 2: ");
+
+    Serial.println("Reading Second: ");
     dist2 = readWallDist();
+    Serial.println(dist2);
+
     wallLen = getWallLen(dist1, dist2, actualAngle);
     errorAngle = getAngle(dist1, dist1, actualAngle);
 
@@ -95,6 +107,7 @@ double getSonicDist(bool doDelay, int reads)
 
   // Measure pulse width on echoPin
   double currDur;
+  double currDist;
   double sum = 0;
   int goodReads = 0;
 
@@ -115,16 +128,15 @@ double getSonicDist(bool doDelay, int reads)
       currDur = pulseIn(ECHO_PIN, HIGH, 50000);
     }
 
-    if (currDur != 0 && currDur < MAX_MEASURE)
+    currDist = currDur / 58.0; // Calc distance duration / speed_of_sound (cm/us)
+
+    if ((currDist != 0 && currDist < MAX_MEASURE))
     {
-      sum += currDur;
+      sum += currDist;
       goodReads++;
     }
   }
-
-  double avgDuration = sum / goodReads;
-  double distance = avgDuration / 58.0; // Calc distance duration / speed_of_sound (cm/us)
-
+  double avgDistance = sum / goodReads;
   // Serial.print(distance);
   // Serial.println(" cm");
 
@@ -132,7 +144,8 @@ double getSonicDist(bool doDelay, int reads)
   {
     return -1;
   }
-  return distance + DIST_FROM_CENTER_OF_ROT;
+
+  return avgDistance + DIST_FROM_CENTER_OF_ROT;
 }
 
 double readWallDist()
@@ -144,6 +157,8 @@ double readWallDist()
 
     if (dist < 0)
     {
+      Serial.println("Bad Read, correcting");
+
       double angle = 5;
       actualAngle = TURN_ANGLE - 5 * (i + 1);
 
@@ -160,13 +175,13 @@ double readWallDist()
       return dist;
     }
   }
-
+  Serial.println("Couldn't get a read");
   return -1; // sads
 }
 bool obstacleAhead()
 {
-  // Serial.print("YO: ");
-  // Serial.println(dist1);
+  Serial.print("YO: ");
+  Serial.println(dist1);
   return dist1 < AVOID_DIST;
 }
 
