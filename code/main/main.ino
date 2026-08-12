@@ -29,9 +29,11 @@ const double MAX_MEASURE = 40;                          // maximum distance (cm)
 const double DIST_FROM_CENTER_OF_ROT = 1;              // in cm
 const double AVOID_DIST = 10 + DIST_FROM_CENTER_OF_ROT; // in cm
 const double TURN_ANGLE = 15;                           // in degrees
+const double SPEED_RATIO = 90/100.0; // How fast the right motor turns in relation to the left 
 
-const int TRIALS = 5;
-const double TIMES_360[TRIALS] = {1.46, 1.53, 1.36, 1.39, 1.48}; // in seconds
+const int TRIALS = 1;
+const int TRIAL_SCALAR = 1; // multiply fullr rot time by this
+const double TIMES_360[TRIALS] = {1.54}; // in seconds
 double FULL_ROT_TIME; // in ms
 double actualAngle;
 
@@ -44,7 +46,7 @@ void setup()
   {
     sum += time * 1000; // convert to ms
   }
-  FULL_ROT_TIME = sum / TRIALS;
+  FULL_ROT_TIME = sum / TRIALS * TRIAL_SCALAR;
 
   pinMode(right_enable_pin, OUTPUT);
   pinMode(right_dir_pin, OUTPUT);
@@ -85,15 +87,21 @@ void loop()
     Serial.println(dist2);
 
     wallLen = getWallLen(dist1, dist2, actualAngle);
-    errorAngle = getAngle(dist1, dist1, actualAngle);
+    errorAngle = getAngle(dist1, dist2, actualAngle);
 
+    Serial.print("Turning: ");
+    
     if (errorAngle > 90)
     {
       left(180 - errorAngle);
+      Serial.print(180 - errorAngle);
+      Serial.println(" Degs Left");
     }
     else
     {
       right(errorAngle);
+      Serial.print(errorAngle);
+      Serial.println(" Degs Right");
     }
   }
   else
@@ -169,9 +177,10 @@ double readWallDist()
       }
 
       left(angle);
-    }
+    } 
     else
     {
+      actualAngle = TURN_ANGLE;
       return dist;
     }
   }
@@ -190,7 +199,7 @@ void forward(int speed)
   digitalWrite(right_dir_pin, HIGH);
   digitalWrite(left_dir_pin, HIGH);
   analogWrite(right_enable_pin, speed);
-  analogWrite(left_enable_pin, speed);
+  analogWrite(left_enable_pin, speed * SPEED_RATIO);
 }
 
 void right(double degrees)
@@ -201,10 +210,10 @@ void right(double degrees)
     return;
   }
 
-  digitalWrite(right_dir_pin, HIGH);
-  digitalWrite(left_dir_pin, LOW);
+  digitalWrite(right_dir_pin, LOW);
+  digitalWrite(left_dir_pin, HIGH);
   analogWrite(right_enable_pin, 255);
-  analogWrite(left_enable_pin, 255);
+  analogWrite(left_enable_pin, 255 * SPEED_RATIO);
   delay(getDurFromDeg(degrees));
   stop();
 }
@@ -217,10 +226,10 @@ void left(double degrees)
     return;
   }
 
-  digitalWrite(right_dir_pin, LOW);
-  digitalWrite(left_dir_pin, HIGH);
+  digitalWrite(right_dir_pin, HIGH);
+  digitalWrite(left_dir_pin, LOW);
   analogWrite(right_enable_pin, 255);
-  analogWrite(left_enable_pin, 255);
+  analogWrite(left_enable_pin, 255 * SPEED_RATIO);
   delay(getDurFromDeg(degrees));
   stop();
 }
@@ -234,7 +243,13 @@ void stop()
 double getDurFromDeg(double deg)
 {
 
-  return FULL_ROT_TIME * deg / 360;
+  //return FULL_ROT_TIME * deg / 360;
+  if(deg <= 0){
+    return 0;
+  }
+
+  double s = ((3.69868 * pow(10, -8)) * pow(deg, 3)) - (0.000020899 * pow(deg, 2)) + (0.0067108 * deg) + 0.00696383;
+  return s * 1000;
 }
 
 double degToRads(double degs)
